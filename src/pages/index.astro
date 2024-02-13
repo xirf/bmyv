@@ -1,0 +1,155 @@
+---
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Will you be my valentine?</title>
+
+		<!-- preload image -->
+		<link rel="preload" href="https://c.tenor.com/yk7NJUarB38AAAAC/tenor.gif" as="image" />
+		<link rel="preload" href="https://c.tenor.com/R74gdS_SrRYAAAAC/tenor.gif" as="image" />
+
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+				font-family: "roboto", sans-serif;
+			}
+			body {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+				overflow: hidden;
+			}
+			#sticker {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			#sticker img {
+				width: 400px;
+				height: 400px;
+			}
+			#sticker p {
+				font-size: 2rem;
+				margin-top: 1rem;
+				font-weight: bolder;
+			}
+
+			#buttons-group {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-top: 2rem;
+				gap: 1rem;
+			}
+
+			button {
+				padding: 1rem 2rem;
+				font-size: 1.5rem;
+				font-weight: bolder;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: all 0.3s;
+				text-align: center;
+			}
+
+			button:hover {
+				transform: scale(1.01);
+			}
+
+			button#yes {
+				background-color: #00ff00;
+				color: #fff;
+			}
+
+			button#no {
+				background-color: #ff0000;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div id="sticker">
+				<img src="https://c.tenor.com/R74gdS_SrRYAAAAC/tenor.gif" alt="stikcer" />
+				<p>Will You Be My Valentine?</p>
+			</div>
+			<div id="buttons-group">
+				<button id="yes">Mau</button>
+				<button id="no">Gak Mau</button>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		const img = document.querySelector("img");
+		const caption = document.querySelector("p");
+		const yes = document.getElementById("yes");
+		const no = document.getElementById("no");
+		let rejectionCount = 1;
+
+		let sadimage = "https://c.tenor.com/yk7NJUarB38AAAAC/tenor.gif";
+
+		const rejection = [
+			"Gak Mau",
+			"Beneran gak mau",
+			"Udah gamau",
+			"Moh gak mau",
+			"Pokonya gak mau",
+			"gausah maksa aku tetep gak mau",
+			"gak mau gak mau gak mau",
+			"udahlah gak mau",
+			"Gak pokoknya enggak ya enggak",
+			"bener bener bener gak mau",
+			"udahlah gak mau",
+			"GAKKKK MAU!!!!",
+			"POKOKNYA GAK MAU",
+			"Tolong jangan lagi, gak mau",
+			"Gak ada maunya",
+			"Enggak deh, gak mau",
+			"Gak pernah mau",
+			"Nggak mau banget",
+			"Gak mau sama sekali",
+			"Tidak, saya tidak mau",
+		];
+
+		const stickers = ["{{Astro.stickers}}"];
+
+		no.addEventListener("click", () => {
+			yes.style.transition = "all 0s";
+			yes.style.fontSize = rejectionCount * 25 + "px";
+			yes.style.padding = `${rejectionCount * 1}rem ${rejectionCount * 2}rem`;
+			yes.style.transition = "all 0.3s";
+
+			if (no.getBoundingClientRect().right > window.innerWidth) {
+				yes.style.position = "fixed";
+				yes.style.right = "0";
+				yes.style.bottom = "0";
+				yes.style.width = "100vw";
+				yes.style.height = "100vh";
+			}
+
+			if (rejectionCount < rejection.length) {
+				no.textContent = rejection[rejectionCount];
+				rejectionCount++;
+			}
+		});
+
+		yes.addEventListener("click", () => {
+			yes.style.display = "none";
+			no.style.display = "none";
+			img.src = sadimage;
+			caption.textContent = "Gak jadi, besok aku jadi petugas kpps";
+		});
+	</script>
+</html>
