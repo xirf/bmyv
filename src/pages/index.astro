@@ -20,6 +20,7 @@
 				margin: 0;
 				box-sizing: border-box;
 				font-family: "roboto", sans-serif;
+				text-align: center;
 			}
 			body {
 				display: flex;
@@ -35,13 +36,14 @@
 				justify-content: center;
 			}
 			#sticker img {
-				width: 400px;
-				height: 400px;
+				width: auto;
+				height: 250px;
 			}
 			#sticker p {
-				font-size: 2rem;
+				font-size: 1.5rem;
 				margin-top: 1rem;
 				font-weight: bolder;
+				padding: 0 12px;
 			}
 
 			#buttons-group {
@@ -54,7 +56,7 @@
 
 			button {
 				padding: 1rem 2rem;
-				font-size: 1.5rem;
+				font-size: 15px;
 				font-weight: bolder;
 				border: none;
 				border-radius: 5px;
@@ -76,12 +78,20 @@
 				background-color: #ff0000;
 				color: #fff;
 			}
+
+			#sticker-image-1 {
+				display: block;
+			}
+
+			#sticker-image-2 {
+				display: none;
+			}
 		</style>
 	</head>
 	<body>
 		<div>
 			<div id="sticker">
-				<img src="https://c.tenor.com/R74gdS_SrRYAAAAC/tenor.gif" alt="stikcer" />
+				<img src="https://c.tenor.com/R74gdS_SrRYAAAAC/tenor.gif" id="stikcer-image-1" />
 				<p>Will You Be My Valentine?</p>
 			</div>
 			<div id="buttons-group">
@@ -123,20 +133,24 @@
 			"Tidak, saya tidak mau",
 		];
 
-		const stickers = ["{{Astro.stickers}}"];
+		const windowWidth = window.innerWidth;
 
 		no.addEventListener("click", () => {
 			yes.style.transition = "all 0s";
-			yes.style.fontSize = rejectionCount * 25 + "px";
-			yes.style.padding = `${rejectionCount * 1}rem ${rejectionCount * 2}rem`;
+			yes.style.fontSize = rejectionCount * (Math.max((windowWidth / 100), 30)) + "px";
+			yes.style.padding = `${rejectionCount * (Math.max((windowWidth / 100), 30)) / 2}px ${rejectionCount * (Math.max((windowWidth / 80), 60))}px`;
 			yes.style.transition = "all 0.3s";
 
 			if (no.getBoundingClientRect().right > window.innerWidth) {
+				yes.style.zIndex = "100";
 				yes.style.position = "fixed";
 				yes.style.right = "0";
 				yes.style.bottom = "0";
 				yes.style.width = "100vw";
+				yes.style.fontSize = "100px";
+				yes.style.padding = "50px";
 				yes.style.height = "100vh";
+
 			}
 
 			if (rejectionCount < rejection.length) {
@@ -148,6 +162,7 @@
 		yes.addEventListener("click", () => {
 			yes.style.display = "none";
 			no.style.display = "none";
+			img.src = "";
 			img.src = sadimage;
 			caption.textContent = "Gak jadi, besok aku jadi petugas kpps";
 		});
